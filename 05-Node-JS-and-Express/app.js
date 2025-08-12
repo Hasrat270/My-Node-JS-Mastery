@@ -28,8 +28,16 @@ app.post("/store-user", function (request, response) {
 app.get("/users", function (request, response) {
   const filePath = path.join(__dirname, "data", "users.json");
   const fileData = fs.readFileSync(filePath);
-  const users = JSON.parse(fileData);
-  response.send("<h1>Users: " + users + "</h1>");
+  const existingUsers = JSON.parse(fileData);
+
+  let responseData = "<ul>";
+
+  for (const user of existingUsers) {
+    responseData += "<li>" + user + "</li>";
+  }
+  responseData += "</ul>";
+
+  response.send(responseData);
 });
 
 app.listen(3000);
